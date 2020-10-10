@@ -13,8 +13,6 @@ import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
 import * as MediaLibrary from 'expo-media-library';
 
-
-
 export default class App extends React.Component {
   cameraRef = React.createRef();
 
@@ -25,7 +23,7 @@ export default class App extends React.Component {
     lastPhoto:null,
     hasCameraRollPermission: null,
     galleryImages:null,
-    showGallery: false
+    showGallery: false,
   };
 
   componentDidMount() {
@@ -39,7 +37,7 @@ export default class App extends React.Component {
   };
 
   updateCameraRollPermission = async () => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    const {status} = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     this.setState({ hasCameraRollPermission: status === 'granted' });
   };
 
@@ -66,22 +64,22 @@ export default class App extends React.Component {
 
   handleChangeCamera = () =>{
     if(this.state.isClicked){
-      this.setState({cameraPosition:Camera.Constants.Type.front})
+      this.setState({cameraPosition:Camera.Constants.Type.front});
       this.setState({isClicked:false})
     }else{
-      this.setState({cameraPosition:Camera.Constants.Type.back})
+      this.setState({cameraPosition:Camera.Constants.Type.back});
       this.setState({isClicked:true})
     }
-  }
+  };
 
   handleSettingLink = () =>{
     Linking.openSettings()
-  }
+  };
 
   // Hent 3 billeder fra galleriet
   handleLoadGalleryImages = async () => {
     try {
-      const result =  await MediaLibrary.getAssetsAsync({first:5});
+      const result =  await MediaLibrary.getAlbumAsync("Personer", );
       this.setState({ galleryImages:result.assets });
     }catch (e) {
       console.log(e)
@@ -97,7 +95,7 @@ export default class App extends React.Component {
     if (hasCameraPermission === false) {
       return (
           <View>
-            <Text>Du har ikke adgang til kamera.</Text>
+            <Text >Du har ikke adgang til kamera.</Text>
             <Button onPress={this.handleSettingLink} title='Get permissions to access camera'> </Button>
           </View>
       );
